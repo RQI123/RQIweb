@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Registrasi</title>
+</head>
+<body>
+
+    <header>
+        <h1>Selamat Datang Di Website Rifqi</h1>
+        <nav>
+            <ul>
+                <!-- ... (navigasi lainnya) ... -->
+                <li><a href="registrasi.html">Registrasi</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="registration">
+        <h2>Registrasi Akun</h2>
+        <form id="registrationForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="gmail">Alamat Email Gmail:</label>
+            <input type="email" id="gmail" name="gmail" required>
+
+            <button type="button" onclick="registerUser()">Daftar</button>
+        </form>
+        <p id="registrationMessage"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Website Saya. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

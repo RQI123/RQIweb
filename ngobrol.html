@@ -1,0 +1,102 @@
+<!-- ngobrol.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Ruang Ngobrol</title>
+</head>
+<body>
+
+    <header>
+        <h1>Website Saya</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="komentar.html">Komentar</a></li>
+                <li><a href="tentang.html">Tentang Kami</a></li>
+                <li><a href="ngobrol.html">Ruang Ngobrol</a></li>
+                <li><a href="rapat.html">Ruang Rapat</a></li>
+                <li><a href="bantuan.html">Ruang Bantuan</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="ngobrol">
+        <h2>Ruang Ngobrol</h2>
+        
+        <!-- Daftar Komentar -->
+        <div id="daftar-komentar">
+            <div class="komentar">
+                <strong>Pengguna 1:</strong> Selamat datang di ruang ngobrol!
+                <button class="hapus" onclick="hapusKomentar(this)">Hapus</button>
+            </div>
+            <div class="komentar">
+                <strong>Pengguna 2:</strong> Terima kasih! Bagaimana kabarmu?
+                <button class="hapus" onclick="hapusKomentar(this)">Hapus</button>
+            </div>
+            <!-- Tambahkan komentar lainnya di sini -->
+        </div>
+        
+        <!-- Formulir Komentar -->
+        <form id="form-komentar">
+            <label for="nama">Nama:</label>
+            <input type="text" id="nama" name="nama" required>
+            <label for="pesan">Pesan:</label>
+            <textarea id="pesan" name="pesan" required></textarea>
+            <button type="button" onclick="tambahKomentar()">Kirim Pesan</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Website Saya. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Memuat komentar yang disimpan dari penyimpanan lokal
+        document.addEventListener('DOMContentLoaded', function() {
+            var komentarSementara = localStorage.getItem('komentarSementara');
+
+            if (komentarSementara) {
+                document.getElementById('daftar-komentar').innerHTML = komentarSementara;
+            }
+        });
+
+        function tambahKomentar() {
+            var nama = document.getElementById('nama').value;
+            var pesan = document.getElementById('pesan').value;
+
+            if (nama && pesan) {
+                var komentarBaru = document.createElement('div');
+                komentarBaru.className = 'komentar';
+                komentarBaru.innerHTML = '<strong>' + nama + ':</strong> ' + pesan +
+                                        '<button class="hapus" onclick="hapusKomentar(this)">Hapus</button>';
+
+                // Menambahkan komentar baru ke daftar
+                var daftarKomentar = document.getElementById('daftar-komentar');
+                daftarKomentar.appendChild(komentarBaru);
+
+                // Menyimpan komentar ke penyimpanan lokal
+                localStorage.setItem('komentarSementara', daftarKomentar.innerHTML);
+
+                // Reset formulir
+                document.getElementById('nama').value = '';
+                document.getElementById('pesan').value = '';
+            }
+        }
+
+        function hapusKomentar(button) {
+            var komentar = button.parentNode;
+            var daftarKomentar = document.getElementById('daftar-komentar');
+            
+            // Menghapus komentar dari daftar
+            daftarKomentar.removeChild(komentar);
+            
+            // Menyimpan komentar ke penyimpanan lokal setelah dihapus
+            localStorage.setItem('komentarSementara', daftarKomentar.innerHTML);
+        }
+    </script>
+
+</body>
+</html>

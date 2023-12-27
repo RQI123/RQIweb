@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Komentar</title>
+</head>
+<body>
+
+    <header>
+        <h1>Website Saya</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="komentar.html">Komentar</a></li>
+                <li><a href="tentang.html">Tentang Kami</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="komentar">
+        <h2>Komentar Pengunjung</h2>
+        <p>Tempat untuk memberikan komentar dan masukan.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Website Saya. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolom Komentar</title>
+    <link rel="stylesheet" href="TES.css">
+    <style>
+
+        #komentarContainer {
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        #komentarList {
+            list-style-type: none;
+            padding: 0;
+            background-color: blanchedalmond;
+        }
+
+        .komentarItem {
+            border: 1px solid #ccc;
+            margin: 5px;
+            padding: 10px;
+            position: relative;
+            background-color: blanchedalmond;
+        }
+
+        .hapusKomentar {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            color: black;
+        }
+
+        textarea {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+            background-color: blanchedalmond;
+        }
+        .b-navbar{
+          margin: 5px;
+          padding: 10px;
+          background-color: #fff;
+          border-radius: 5px;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+          vertical-align: text-top;
+          text-align: right;
+
+        }
+    </style>
+</head>
+<body>
+    <div id="komentarContainer">
+        <h2>Komentar</h2>
+        <textarea id="komentarInput" placeholder="Tambahkan komentar..."></textarea>
+        <button onclick="simpanKomentar()">Simpan Komentar</button>
+        <ul id="komentarList"></ul>
+        <a href="index.html" class="b-navbar">HOME</a>
+    </div>
+
+    <script>
+        function simpanKomentar() {
+            var komentarInput = document.getElementById('komentarInput');
+            var komentarList = document.getElementById('komentarList');
+
+            var komentarText = komentarInput.value.trim();
+            if (komentarText !== '') {
+                var komentarItem = document.createElement('li');
+                komentarItem.className = 'komentarItem';
+
+                var hapusKomentar = document.createElement('span');
+                hapusKomentar.className = 'hapusKomentar';
+                hapusKomentar.innerHTML = 'Hapus';
+                hapusKomentar.onclick = function () {
+                    hapusKomentarItem(komentarItem);
+                };
+
+                komentarItem.textContent = komentarText;
+                komentarItem.appendChild(hapusKomentar);
+
+                komentarList.appendChild(komentarItem);
+                komentarInput.value = '';
+
+                // Menyimpan komentar ke penyimpanan lokal
+                simpanKomentarLokal();
+            }
+        }
+
+        function hapusKomentarItem(item) {
+            var komentarList = document.getElementById('komentarList');
+            komentarList.removeChild(item);
+
+            // Menghapus komentar dari penyimpanan lokal
+            simpanKomentarLokal();
+        }
+
+        function simpanKomentarLokal() {
+            var komentarTersimpan = [];
+            var komentarList = document.getElementById('komentarList');
+
+            for (var i = 0; i < komentarList.children.length; i++) {
+                var komentarItem = komentarList.children[i];
+                var komentarText = komentarItem.textContent.replace('Hapus', '').trim();
+                komentarTersimpan.push(komentarText);
+            }
+
+            localStorage.setItem('komentar', JSON.stringify(komentarTersimpan));
+        }
+
+        // Memuat komentar dari penyimpanan lokal saat halaman dimuat
+        function muatKomentarDariLokal() {
+            var komentarTersimpan = JSON.parse(localStorage.getItem('komentar')) || [];
+            var komentarList = document.getElementById('komentarList');
+
+            komentarTersimpan.forEach(function (komentarText) {
+                var komentarItem = document.createElement('li');
+                komentarItem.className = 'komentarItem';
+
+                var hapusKomentar = document.createElement('span');
+                hapusKomentar.className = 'hapusKomentar';
+                hapusKomentar.innerHTML = 'Hapus';
+                hapusKomentar.onclick = function () {
+                    hapusKomentarItem(komentarItem);
+                };
+
+                komentarItem.textContent = komentarText;
+                komentarItem.appendChild(hapusKomentar);
+
+                komentarList.appendChild(komentarItem);
+            });
+        }
+
+        // Memanggil fungsi untuk memuat komentar dari penyimpanan lokal saat halaman dimuat
+        muatKomentarDariLokal();
+    </script>
+</body>
+</html>
+
